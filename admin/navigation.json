@@ -1,13 +1,13 @@
 {
-  "section": "customer",
-  "titleId": "admin-example.navigation.label-group",
+  "section": "products",
+  "titleId": "intelligent-search.navigation.label-group",
   "subSection": "example",
-  "searchKeyWordsHelpers": "admin-example.navigation.search.kws",
+  "searchKeyWordsHelpers": "intelligent-search.navigation.search.kws",
   "subSectionItems": [
     {
-      "labelId": "admin-example.navigation.label-table",
+      "labelId": "intelligent-search.navigation.label-table",
       "path": "/admin/intelligent-search-admin",
-      "searchKeyWordsHelpers": "admin-example.navigation.table.search.kws"
+      "searchKeyWordsHelpers": "intelligent-search.navigation.table.search.kws"
     }
   ]
 }
