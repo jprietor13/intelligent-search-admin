@@ -1,8 +1,8 @@
 {
-  "name": "admin-example",
-  "vendor": "vtex",
+  "name": "intelligent-search-admin",
+  "vendor": "exito",
   "version": "0.0.12",
-  "title": "Example Admin App",
+  "title": "Intelligent Search Admin",
   "description": "",
   "mustUpdateAt": "2022-08-28",
   "scripts": {
