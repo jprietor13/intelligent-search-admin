@@ -1,0 +1,15 @@
+query getFacets($query:String, $value:String){
+  facets(
+    query:$query, map:"c",
+    selectedFacets: [{ key:"c", value:$value}])
+    @context(provider: "vtex.search-graphql"){
+    facets{
+      name
+      values{
+        key
+        name
+        id
+      }
+    }
+  }
+}

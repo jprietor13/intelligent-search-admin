@@ -1,27 +1,24 @@
-import React, { FC } from 'react'
-import { FormattedMessage } from 'react-intl'
-import { Layout, PageBlock, PageHeader } from 'vtex.styleguide'
+import React, { useState, useEffect } from 'react'
+import { useQuery } from 'react-apollo'
+import { getFacets } from './queries/getFacets.gql'
+import { pathOr } from 'ramda'
+import { facetsSerializer } from './utils/serializer'
 
-import './styles.global.css'
+export const IntelligentSearchDetails = (props: any) => {
+  const [facetsData, setFacetsData] = useState([])
+  const { data: facets } = useQuery(getFacets, {
+    variables: {
+      query: `${props.department}`,
+      value: `${props.department}`,
+    },
+    fetchPolicy: 'no-cache',
+  })
 
-const IntelligentSearchDetails: FC<Props> = ({ params }) => {
-  return (
-    <Layout
-      pageHeader={
-        <PageHeader title={<FormattedMessage id="admin-example.details" />} />
-      }
-    >
-      <PageBlock variation="full">
-        <div>
-          Params: <pre>{JSON.stringify(params, null, 2)}</pre>
-        </div>
-      </PageBlock>
-    </Layout>
-  )
+  useEffect(() => {
+    setFacetsData(facetsSerializer(pathOr([], ['facets'], facets)))
+  }, [facets, facetsData])
+
+  console.log(facetsData)
+
+  return <div>Hola mundo {props.department}</div>
 }
-
-interface Props {
-  params: any
-}
-
-export default IntelligentSearchDetails
