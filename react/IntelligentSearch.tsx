@@ -19,7 +19,7 @@ const IntelligentSearch = () => {
   }
 
   return (
-    <Layout>
+    <Layout fullWidth={true}>
       <div style={{ padding: '20px', color: '#585959', background: '#fafafa' }}>
         <Card>
           <Dropdown
