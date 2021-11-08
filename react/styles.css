@@ -1,0 +1,8 @@
+.containerCategories {
+  height: 64vh;
+  overflow: auto;
+}
+
+.containerCategories p {
+  padding-left: 20px;
+}

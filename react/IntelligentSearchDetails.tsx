@@ -1,38 +1,33 @@
-import React, { useState, useEffect } from 'react'
-import { useQuery } from 'react-apollo'
-import { getCategoriesTree } from './queries/getCategoriesTree.gql'
-import { getFacets } from './queries/getFacets.gql'
-import { pathOr } from 'ramda'
-import { categoriesTreeSerializer, facetsSerializer } from './utils/serializer'
+import React from 'react'
+import { useCategoriesData } from './hooks/useCategoriesData'
+
+import styles from '../react/styles.css'
 
 export const IntelligentSearchDetails = (props: any) => {
-  const [categoriesData, setCategoriesData] = useState([])
-  const [category, setCategory] = useState([])
-  const [facetsData, setFacetsData] = useState([])
-
-  const { data: categories } = useQuery(getCategoriesTree, {
-    fetchPolicy: 'no-cache',
-  })
-
-  const { data: facets } = useQuery(getFacets, {
-    variables: {
-      query: `${props.department}`,
-      value: `${props.department}`,
-    },
-    fetchPolicy: 'no-cache',
-  })
-
-  useEffect(() => {
-    setCategoriesData(
-      categoriesTreeSerializer(pathOr([], ['categories'], categories))
-    )
-    setFacetsData(facetsSerializer(pathOr([], ['facets'], facets)))
-    const filterCategoriesData = categoriesData.filter((item: any) => {
-      return item.href.includes(props.department)
-    })
-    setCategory(filterCategoriesData)
-  }, [categories, facets, facetsData])
-
-  console.log('Category', category)
-  return <div>Hola mundo {props.department}</div>
+  const { category } = useCategoriesData(props)
+  console.log(category)
+  return (
+    <>
+      <h3>Categorias de {props.department}</h3>
+      <hr />
+      <div className={styles.containerCategories}>
+        {category.map((item: any) => (
+          <>
+            {item.children.map((item: any) => (
+              <>
+                {item.hasChildren && (
+                  <div>
+                    <h4>{item.name}</h4>
+                    {item.children.map((children: any) => (
+                      <p>{children.name}</p>
+                    ))}
+                  </div>
+                )}
+              </>
+            ))}
+          </>
+        ))}
+      </div>
+    </>
+  )
 }
