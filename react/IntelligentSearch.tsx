@@ -29,11 +29,11 @@ const IntelligentSearch = () => {
             options={[
               {
                 value: 'tecnologia',
-                label: 'Tecnologia',
+                label: 'Tecnología',
               },
               {
                 value: 'electrodomesticos',
-                label: 'Electrodomesticos',
+                label: 'Electrodomésticos',
               },
             ]}
             value={department}

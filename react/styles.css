@@ -6,3 +6,16 @@
 .containerCategories p {
   padding-left: 20px;
 }
+
+.containerSubCategories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px !important;
+}
+
+.categoryCard {
+  border: 0.1px solid #d3d1d17d;
+  grid-gap: 10px !important;
+  padding: 10px;
+  border-radius: 5px;
+}

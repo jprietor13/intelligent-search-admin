@@ -33,5 +33,5 @@ export const useCategoriesData = (props: any) => {
     setCategory(filterCategoriesData)
   }, [categories, facets, facetsData])
 
-  return { category }
+  return { category, facetsData }
 }
