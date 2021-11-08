@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useCategoriesData } from './hooks/useCategoriesData'
 import { EXPERIMENTAL_Select } from 'vtex.styleguide'
 
@@ -6,17 +6,23 @@ import styles from '../react/styles.css'
 
 export const IntelligentSearchDetails = (props: any) => {
   const { category, facetsData } = useCategoriesData(props)
+  const [facetsToSelect, setFacetsToSelect] = useState({})
   console.log(facetsData)
-  const options = [
-    {
-      value: { id: 0, name: 'first-option' },
-      label: 'First Option',
-    },
-    {
-      value: { id: 1, name: 'second-option' },
-      label: 'Second Option',
-    },
-  ]
+
+  useEffect(() => {
+    if (facetsData) {
+      let newArray = []
+      let mapFacets = facetsData.map((item: any, index: number) => {
+        return {
+          value: { id: index, name: item.name },
+          label: item.name,
+        }
+      })
+      newArray.push(mapFacets)
+      setFacetsToSelect(newArray[0])
+    }
+  }, [facetsData])
+
   return (
     <>
       <h3>Categorias de {props.department}</h3>
@@ -33,11 +39,10 @@ export const IntelligentSearchDetails = (props: any) => {
                       {item.children.map((children: any) => (
                         <div className={styles.categoryCard}>
                           <EXPERIMENTAL_Select
-                            defaultValue={options[0]}
                             size="small"
                             multi={true}
                             label={children.name}
-                            options={facetsData}
+                            options={facetsToSelect}
                             onChange={(values: any) => {
                               console.log(
                                 `[Select] Selected: ${JSON.stringify(
