@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Layout, Card, Dropdown } from 'vtex.styleguide'
 import { IntelligentSearchDetails } from './IntelligentSearchDetails'
 
-import './styles.global.css'
+import styles from '../react/styles.css'
 
 const IntelligentSearch = () => {
   const [initialValue, setInitialValue] = useState({
@@ -41,7 +41,9 @@ const IntelligentSearch = () => {
           />
         </Card>
       </div>
-      <div style={{ padding: '20px', color: '#585959', background: '#fafafa' }}>
+      <div
+        className={department ? styles.detailsContainer : styles.hiddenDetails}
+      >
         <Card>
           <IntelligentSearchDetails department={department} />
         </Card>

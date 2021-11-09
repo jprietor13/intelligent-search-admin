@@ -20,4 +20,16 @@
   padding: 10px;
   border-radius: 5px;
   margin-right: 10px !important;
+  box-shadow: 2px 2px 2px #e2e2e2bf;
+}
+
+.detailsContainer {
+  display: block;
+  padding: 20px;
+  color: '#585959';
+  background: #fafafa;
+}
+
+.hiddenDetails {
+  display: none;
 }

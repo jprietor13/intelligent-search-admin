@@ -6,22 +6,25 @@ import styles from '../react/styles.css'
 
 export const IntelligentSearchDetails = (props: any) => {
   const { category, facetsData } = useCategoriesData(props)
-  const [facetsToSelect, setFacetsToSelect] = useState({})
+  const [facetsToSelect, setFacetsToSelect]: any[] = useState([])
+  const [selectedFacets, setSelectedFacets]: any = useState({})
   console.log(facetsData)
 
   useEffect(() => {
     if (facetsData) {
-      let newArray = []
-      let mapFacets = facetsData.map((item: any, index: number) => {
+      const mapFacets = facetsData.map((item: any, index: number) => {
         return {
           value: { id: index, name: item.name },
           label: item.name,
         }
       })
-      newArray.push(mapFacets)
-      setFacetsToSelect(newArray[0])
+      setFacetsToSelect(mapFacets ?? [])
     }
   }, [facetsData])
+
+  useEffect(() => {
+    console.log('selectedFacets', selectedFacets)
+  }, [selectedFacets])
 
   return (
     <>
@@ -41,16 +44,15 @@ export const IntelligentSearchDetails = (props: any) => {
                           <EXPERIMENTAL_Select
                             size="small"
                             multi={true}
+                            placeholder="Seleccione los atributos..."
                             label={children.name}
                             options={facetsToSelect}
+                            value={selectedFacets[children.name]}
                             onChange={(values: any) => {
-                              console.log(
-                                `[Select] Selected: ${JSON.stringify(
-                                  values,
-                                  null,
-                                  2
-                                )}`
-                              )
+                              setSelectedFacets({
+                                ...selectedFacets,
+                                [children.name]: values,
+                              })
                             }}
                             onSearchInputChange={(value: any) => {
                               console.log(
