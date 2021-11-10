@@ -18,3 +18,12 @@ export const facetsSerializer = (facets: any) => {
   }
   return null
 }
+
+export const documentsSerializer = (documents: any) => {
+  if (documents) {
+    return documents.map((item: any) => {
+      return item.fields
+    })
+  }
+  return null
+}

@@ -1,5 +1,5 @@
 .containerCategories {
-  height: 64vh;
+  height: 56vh;
   overflow: auto;
 }
 
@@ -28,6 +28,7 @@
   padding: 20px;
   color: '#585959';
   background: #fafafa;
+  margin-bottom: 50px;
 }
 
 .hiddenDetails {

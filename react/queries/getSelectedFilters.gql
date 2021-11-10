@@ -1,0 +1,9 @@
+query getSelectedFilters($acronym: String, $fields: [String]) {
+  documents(acronym: $acronym, fields: $fields) {
+    id
+    fields {
+      key
+      value
+    }
+  }
+}

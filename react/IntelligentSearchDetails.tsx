@@ -1,30 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useCategoriesData } from './hooks/useCategoriesData'
-import { EXPERIMENTAL_Select } from 'vtex.styleguide'
+import { EXPERIMENTAL_Select, FloatingActionBar } from 'vtex.styleguide'
 
 import styles from '../react/styles.css'
 
 export const IntelligentSearchDetails = (props: any) => {
-  const { category, facetsData } = useCategoriesData(props)
-  const [facetsToSelect, setFacetsToSelect]: any[] = useState([])
-  const [selectedFacets, setSelectedFacets]: any = useState({})
-  console.log(facetsData)
-
-  useEffect(() => {
-    if (facetsData) {
-      const mapFacets = facetsData.map((item: any, index: number) => {
-        return {
-          value: { id: index, name: item.name },
-          label: item.name,
-        }
-      })
-      setFacetsToSelect(mapFacets ?? [])
-    }
-  }, [facetsData])
-
-  useEffect(() => {
-    console.log('selectedFacets', selectedFacets)
-  }, [selectedFacets])
+  const {
+    category,
+    facetsToSelect,
+    selectedFacets,
+    setSelectedFacets,
+    loadingActionBar,
+    setLoadingActionBar,
+  } = useCategoriesData(props)
 
   return (
     <>
@@ -69,6 +57,19 @@ export const IntelligentSearchDetails = (props: any) => {
             ))}
           </>
         ))}
+        <FloatingActionBar
+          save={{
+            label: 'Guardar',
+            isLoading: loadingActionBar,
+            onClick: () => {
+              setLoadingActionBar(true)
+              setTimeout(() => {
+                alert('This was invoked because save was pressed')
+                setLoadingActionBar(false)
+              }, 2000)
+            },
+          }}
+        />
       </div>
     </>
   )
