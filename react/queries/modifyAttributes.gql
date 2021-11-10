@@ -1,0 +1,7 @@
+mutation modifyAttributes($acronym: String!, $documentInput: DocumentInput!) {
+  updateDocument(acronym: $acronym, document: $documentInput) {
+    id
+    href
+    documentId
+  }
+}

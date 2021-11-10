@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { useQuery } from 'react-apollo'
+import compose from 'recompose/compose'
+import { useQuery, useMutation, graphql } from 'react-apollo'
 import { getCategoriesTree } from '../queries/getCategoriesTree.gql'
 import { getFacets } from '../queries/getFacets.gql'
 import { getSelectedFilters } from '../queries/getSelectedFilters.gql'
@@ -9,6 +10,7 @@ import {
   facetsSerializer,
   documentsSerializer,
 } from '../utils/serializer'
+import MODIFY_ATTRIBUTES from '../queries/modifyAttributes.gql'
 
 export const useCategoriesData = (props: any) => {
   const [categoriesData, setCategoriesData] = useState([])
@@ -17,6 +19,7 @@ export const useCategoriesData = (props: any) => {
   const [facetsToSelect, setFacetsToSelect]: any[] = useState([])
   const [selectedFacets, setSelectedFacets]: any = useState({})
   const [filters, setFilters]: any[] = useState([])
+  const [findCategory, setFindCategory]: any[] = useState([])
   const [loadingActionBar, setLoadingActionBar] = useState(false)
 
   const { data: categories } = useQuery(getCategoriesTree, {
@@ -39,6 +42,13 @@ export const useCategoriesData = (props: any) => {
     fetchPolicy: 'no-cache',
   })
 
+  const [dataModifyAttributes, { data: dataModify }] = useMutation(
+    MODIFY_ATTRIBUTES,
+    {
+      fetchPolicy: 'no-cache',
+    }
+  )
+
   useEffect(() => {
     setCategoriesData(
       categoriesTreeSerializer(pathOr([], ['categories'], categories))
@@ -48,8 +58,15 @@ export const useCategoriesData = (props: any) => {
     const filterCategoriesData = categoriesData.filter((item: any) => {
       return item.href.includes(props.department)
     })
+    const findIdCategory = categoriesData.find((item: any) => {
+      return item.href.includes(props.department)
+    })
     setCategory(filterCategoriesData)
-    console.log(filters)
+    setFindCategory(findIdCategory)
+    console.log('filters', filters)
+    console.log('categorias', categoriesData)
+    console.log('id', findCategory)
+    console.log('department', props.department)
   }, [categories, facets, facetsData, selectedFilters])
 
   useEffect(() => {
@@ -68,6 +85,32 @@ export const useCategoriesData = (props: any) => {
     console.log('selectedFacets', selectedFacets)
   }, [selectedFacets])
 
+  useEffect(() => {}, [dataModify])
+
+  const handleSaveAttributes = () => {
+    dataModifyAttributes({
+      variables: {
+        acronym: 'FI',
+        documentInput: {
+          fields: [
+            {
+              key: 'category',
+              value: props.department,
+            },
+            {
+              key: 'selectedFilters',
+              value: JSON.stringify(selectedFacets),
+            },
+            {
+              key: 'id',
+              value: findCategory.id,
+            },
+          ],
+        },
+      },
+    })
+  }
+
   return {
     category,
     facetsToSelect,
@@ -75,5 +118,10 @@ export const useCategoriesData = (props: any) => {
     setSelectedFacets,
     loadingActionBar,
     setLoadingActionBar,
+    handleSaveAttributes,
   }
 }
+
+export default compose(
+  graphql(MODIFY_ATTRIBUTES, { name: 'dataModifyAttributes' })
+)

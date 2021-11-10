@@ -12,6 +12,7 @@ export const IntelligentSearchDetails = (props: any) => {
     setSelectedFacets,
     loadingActionBar,
     setLoadingActionBar,
+    handleSaveAttributes,
   } = useCategoriesData(props)
 
   return (
@@ -63,6 +64,7 @@ export const IntelligentSearchDetails = (props: any) => {
             isLoading: loadingActionBar,
             onClick: () => {
               setLoadingActionBar(true)
+              handleSaveAttributes()
               setTimeout(() => {
                 alert('This was invoked because save was pressed')
                 setLoadingActionBar(false)
