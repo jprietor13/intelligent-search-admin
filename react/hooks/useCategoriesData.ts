@@ -20,6 +20,7 @@ export const useCategoriesData = (props: any) => {
   const [selectedFacets, setSelectedFacets]: any = useState({})
   const [filters, setFilters]: any[] = useState([])
   const [findCategory, setFindCategory]: any[] = useState([])
+  const [getCategory, setGetCategory]: any[] = useState([])
   const [loadingActionBar, setLoadingActionBar] = useState(false)
 
   const { data: categories } = useQuery(getCategoriesTree, {
@@ -63,10 +64,6 @@ export const useCategoriesData = (props: any) => {
     })
     setCategory(filterCategoriesData)
     setFindCategory(findIdCategory)
-    console.log('filters', filters)
-    console.log('categorias', categoriesData)
-    console.log('id', findCategory)
-    console.log('department', props.department)
   }, [categories, facets, facetsData, selectedFilters])
 
   useEffect(() => {
@@ -82,8 +79,12 @@ export const useCategoriesData = (props: any) => {
   }, [facetsData])
 
   useEffect(() => {
-    console.log('selectedFacets', selectedFacets)
-  }, [selectedFacets])
+    const filterCategoryEntity = filters.filter((item: any) => {
+      return item[0].value === props.department
+    })
+    setGetCategory(filterCategoryEntity)
+    console.log('juan prieto', getCategory)
+  }, [selectedFacets, filters])
 
   useEffect(() => {}, [dataModify])
 
