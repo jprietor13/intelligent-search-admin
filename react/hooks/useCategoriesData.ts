@@ -17,7 +17,10 @@ export const useCategoriesData = (props: any) => {
   const [category, setCategory] = useState([])
   const [facetsData, setFacetsData] = useState([])
   const [facetsToSelect, setFacetsToSelect]: any[] = useState([])
-  const [selectedFacets, setSelectedFacets]: any = useState({})
+  const [attributes, setAttributes] = useState({})
+  console.log('juan', attributes)
+  const [selectedFacets, setSelectedFacets]: any = useState(attributes)
+  console.log('prieto', selectedFacets)
   const [filters, setFilters]: any[] = useState([])
   const [findCategory, setFindCategory]: any[] = useState([])
   const [getCategory, setGetCategory]: any[] = useState([])
@@ -68,13 +71,14 @@ export const useCategoriesData = (props: any) => {
 
   useEffect(() => {
     if (facetsData) {
-      const mapFacets = facetsData.map((item: any, index: number) => {
+      const mapFacets = facetsData?.map((item: any, index: number) => {
         return {
           value: { id: index, name: item.name },
           label: item.name,
         }
       })
       setFacetsToSelect(mapFacets ?? [])
+      setSelectedFacets(attributes ?? {})
     }
   }, [facetsData])
 
@@ -83,8 +87,19 @@ export const useCategoriesData = (props: any) => {
       return item[0].value === props.department
     })
     setGetCategory(filterCategoryEntity)
-    console.log('juan prieto', getCategory)
   }, [selectedFacets, filters])
+
+  useEffect(() => {
+    const getAttributes = getCategory?.map((item: any) => {
+      return item.filter((subItem: any) => {
+        return subItem.key === 'selectedFilters'
+      })
+    })
+    const getValue = getAttributes?.map((item: any) => {
+      return JSON.parse(item[0].value)
+    })
+    setAttributes(getValue[0])
+  }, [getCategory])
 
   useEffect(() => {}, [dataModify])
 
