@@ -34,3 +34,18 @@
 .hiddenDetails {
   display: none;
 }
+
+:global(.styles_modal__gNwvD.vtex-modal__modal.br2.w-100.vtex-styleguide-9-x-mh100.flex.flex-column) {
+  width: 25%;
+}
+
+:global(.styles_modal__gNwvD.vtex-modal__modal.br2.w-100.vtex-styleguide-9-x-mh100.flex.flex-column
+    button) {
+  float: right;
+  margin-top: 10px;
+}
+
+:global(.styles_modal__gNwvD.vtex-modal__modal.br2.w-100.vtex-styleguide-9-x-mh100.flex.flex-column)
+  :global(.vtex-modal__close-icon.absolute.top-0.right-0.pa5.pa6-ns.pointer.ml-auto.items-center.flex) {
+  display: none;
+}

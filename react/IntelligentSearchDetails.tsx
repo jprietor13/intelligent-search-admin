@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useCategoriesData } from './hooks/useCategoriesData'
-import { EXPERIMENTAL_Select, FloatingActionBar } from 'vtex.styleguide'
+import {
+  EXPERIMENTAL_Select,
+  FloatingActionBar,
+  Modal,
+  Button,
+} from 'vtex.styleguide'
 
 import styles from '../react/styles.css'
 
@@ -14,6 +19,11 @@ export const IntelligentSearchDetails = (props: any) => {
     setLoadingActionBar,
     handleSaveAttributes,
   } = useCategoriesData(props)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleModalToggle = () => {
+    setIsOpen(!isOpen)
+  }
 
   return (
     <>
@@ -66,12 +76,27 @@ export const IntelligentSearchDetails = (props: any) => {
               setLoadingActionBar(true)
               handleSaveAttributes()
               setTimeout(() => {
-                alert('This was invoked because save was pressed')
+                handleModalToggle()
                 setLoadingActionBar(false)
               }, 2000)
             },
           }}
         />
+        <Modal centered isOpen={isOpen} onClose={handleModalToggle}>
+          <div className="dark-gray">
+            <p>
+              La información ha sido guardada con exito. Los cambios se
+              visualizaran en unos minutos.
+            </p>
+            <Button
+              variation="primary"
+              size="small"
+              onClick={handleModalToggle}
+            >
+              Aceptar
+            </Button>
+          </div>
+        </Modal>
       </div>
     </>
   )
