@@ -53,11 +53,6 @@ export const IntelligentSearchDetails = (props: any) => {
                                 [children.name]: values,
                               })
                             }}
-                            onSearchInputChange={(value: any) => {
-                              console.log(
-                                '[Select] onSeachInputChange: ' + value
-                              )
-                            }}
                           />
                         </div>
                       ))}
