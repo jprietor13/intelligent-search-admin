@@ -46,11 +46,11 @@ export const IntelligentSearchDetails = (props: any) => {
                             placeholder="Seleccione los atributos..."
                             label={children.name}
                             options={facetsToSelect}
-                            value={selectedFacets[children.name]}
+                            value={selectedFacets[children.id]}
                             onChange={(values: any) => {
                               setSelectedFacets({
                                 ...selectedFacets,
-                                [children.name]: values,
+                                [children.id]: values,
                               })
                             }}
                           />
